@@ -1,4 +1,3 @@
--- auto-generated definition
 create function add_customer(p_member_id integer, p_username character varying, p_display_name character varying, p_first_name character varying, p_middle_name character varying, p_last_name character varying, p_address character varying, p_city character varying, p_postal_code character varying, p_email character varying, p_telephone_no character varying, p_password character varying) returns integer
     language plpgsql
 as
@@ -25,7 +24,7 @@ BEGIN
                p_postal_code,
                p_email,
                p_telephone_no,
-               p_password
+               crypt(p_password, gen_salt('bf'))
            )
     RETURNING id INTO new_customer_id;
 
