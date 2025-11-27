@@ -1,6 +1,5 @@
--- auto-generated definition
 create function show_membership(p_company_id integer)
-    returns TABLE(name character varying, detail character varying, rank character varying, price numeric)
+    returns TABLE(name character varying, detail character varying, price numeric)
     language plpgsql
 as
 $$
@@ -9,10 +8,10 @@ BEGIN
         SELECT
             m.name,
             m.detail,
-            m.rank,
             m.price
         FROM "membership" AS m
-        WHERE m.company_id = p_company_id;
+        WHERE m.company_id = p_company_id
+        ORDER BY m.price;
 END;
 $$;
 
