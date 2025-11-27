@@ -1,5 +1,5 @@
 create function show_all_membership(p_company_id integer)
-    returns TABLE(customer_name text, membership_rank character varying, price numeric, expired_date date, status text)
+    returns TABLE(customer_name text, membership_name character varying, price numeric, expired_date date, status text)
     language plpgsql
 as
 $$
@@ -7,7 +7,7 @@ BEGIN
     RETURN QUERY
         SELECT
             (c.first_name || ' ' || c.last_name)::TEXT AS customer_name,
-            m.rank,
+            m.name,
             m.price,
             m.expired_date,
             CASE
@@ -17,7 +17,8 @@ BEGIN
                 END::TEXT AS status
         FROM membership AS m
                  JOIN customer AS c ON c.member_id = m.id
-        WHERE m.company_id = p_company_id;
+        WHERE m.company_id = p_company_id
+        ORDER BY m.rank DESC;
 END;
 $$;
 
