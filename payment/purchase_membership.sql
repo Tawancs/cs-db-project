@@ -15,10 +15,6 @@ BEGIN
     FROM "membership_plan"
     WHERE membership_plan_id = p_membership_plan_id;
 
-    IF v_plan_price IS NULL THEN
-        RAISE EXCEPTION 'Membership Plan ID % not found', p_membership_plan_id;
-    END IF;
-
     INSERT INTO "membership" (customer_id,
                               membership_plan_id,
                               purchased_date,
