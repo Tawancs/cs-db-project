@@ -1,23 +1,20 @@
-create table customer
+create table membership_plan
 (
-    id           serial
+    membership_plan_id serial
         primary key,
-    username     varchar(50)  not null
-        unique,
-    display_name varchar(50)  not null,
-    first_name   varchar(50)  not null,
-    middle_name  varchar(50),
-    last_name    varchar(50)  not null,
-    address      varchar(255) not null,
-    city         varchar(100) not null,
-    postal_code  varchar(20)  not null,
-    email        varchar(100) not null
-        unique,
-    telephone_no varchar(10)  not null,
-    password     varchar(255) not null
+    company_id         integer        not null
+        constraint fk_plan_company
+            references company
+            on delete cascade,
+    name               varchar(100)   not null,
+    detail             varchar(255),
+    rank               integer        not null,
+    price              numeric(15, 2) not null,
+    duration           integer        not null,
+    is_active          boolean default true
 );
 
-alter table customer
+alter table membership_plan
     owner to sc_db_project_user;
 
 
