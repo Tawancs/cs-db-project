@@ -1,23 +1,19 @@
-create table customer
+create table membership
 (
-    id           serial
-        primary key,
-    username     varchar(50)  not null
-        unique,
-    display_name varchar(50)  not null,
-    first_name   varchar(50)  not null,
-    middle_name  varchar(50),
-    last_name    varchar(50)  not null,
-    address      varchar(255) not null,
-    city         varchar(100) not null,
-    postal_code  varchar(20)  not null,
-    email        varchar(100) not null
-        unique,
-    telephone_no varchar(10)  not null,
-    password     varchar(255) not null
+    customer_id        integer not null
+        constraint fk_mem_customer
+            references customer
+            on delete cascade,
+    membership_plan_id integer not null
+        constraint fk_mem_plan
+            references membership_plan
+            on delete cascade,
+    purchased_date     date default CURRENT_DATE,
+    expired_date       date    not null,
+    primary key (customer_id, membership_plan_id)
 );
 
-alter table customer
+alter table membership
     owner to sc_db_project_user;
 
 
