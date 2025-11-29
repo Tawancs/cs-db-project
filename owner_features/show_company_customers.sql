@@ -1,15 +1,5 @@
 create function show_company_customers(p_company_id integer)
-    returns TABLE
-            (
-                customer_name     character varying,
-                email             character varying,
-                phone             character varying,
-                membership_type   character varying,
-                start_date        date,
-                expiry_date       date,
-                days_until_expiry character varying,
-                status            character varying
-            )
+    returns TABLE(customer_name character varying, email character varying, phone character varying, membership_type character varying, start_date date, expiry_date date, days_until_expiry character varying, status character varying)
     language plpgsql
 as
 $$
@@ -35,7 +25,7 @@ BEGIN
                    END::VARCHAR
 
         FROM "customer" c
-                 JOIN "membership" m ON c.member_id = m.id
+                 JOIN "membership" m ON c.id = m.customer_id
                  JOIN "membership_plan" mp ON m.membership_plan_id = mp.membership_plan_id
         WHERE mp.company_id = p_company_id
         ORDER BY mp.rank DESC, m.expired_date DESC;
