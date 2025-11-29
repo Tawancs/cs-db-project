@@ -1,23 +1,21 @@
-create table customer
+create table membership_transaction
 (
-    id           serial
+    id             serial
         primary key,
-    username     varchar(50)  not null
-        unique,
-    display_name varchar(50)  not null,
-    first_name   varchar(50)  not null,
-    middle_name  varchar(50),
-    last_name    varchar(50)  not null,
-    address      varchar(255) not null,
-    city         varchar(100) not null,
-    postal_code  varchar(20)  not null,
-    email        varchar(100) not null
-        unique,
-    telephone_no varchar(10)  not null,
-    password     varchar(255) not null
+    customer_id    integer        not null
+        constraint fk_mtransaction_customer
+            references customer
+            on delete cascade,
+    amount         numeric(15, 2) not null,
+    currency       varchar(10) default 'THB'::character varying,
+    payment_method varchar(50),
+    reference_id   varchar(50),
+    description    text,
+    purchased_date date        default CURRENT_DATE,
+    expired_date   date
 );
 
-alter table customer
+alter table membership_transaction
     owner to sc_db_project_user;
 
 
