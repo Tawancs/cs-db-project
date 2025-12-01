@@ -38,13 +38,13 @@ v_new_username
             r.telephone_no,
             r.specialize,
             v_new_password,     -- Generated Password
-            p_salary,           -- Parameter passed to this function
-            CURRENT_DATE,       -- Hire Date is today
-            p_contract_type,    -- Parameter passed to this function
-            p_contract_period   -- Parameter passed to this function
+            p_salary,           
+            CURRENT_DATE,       
+            p_contract_type,    
+            p_contract_period   
      );
 
-    -- 4. Delete the request (since they are now an employee)
+    -- delete the request 
 DELETE
 FROM "request_form"
 WHERE email = p_email;
